@@ -7,7 +7,7 @@ public class Fabrica extends Thread {
 	private Basura basura;
 	private Horno horno;
 	private Molde molde;
-	private Pintar pintar;
+	private Impresora pintar;
 	
 	public Fabrica() {
 		stockPiedra = new StockPiedra(this);
@@ -16,7 +16,7 @@ public class Fabrica extends Thread {
 		basura = new Basura();
 		horno = new Horno(this);
 		molde = new Molde(this);
-		pintar = new Pintar(this);
+		pintar = new Impresora(this);
 		start();
 		
 		new Pantalla(this);
@@ -64,7 +64,7 @@ public class Fabrica extends Thread {
 		return molde;
 	}
 	
-	public Pintar getPintar() {
+	public Impresora getPintar() {
 		return pintar;
 	}
 }

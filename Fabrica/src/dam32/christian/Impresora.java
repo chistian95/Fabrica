@@ -1,9 +1,9 @@
 package dam32.christian;
 
-public class Pintar {
+public class Impresora {
 	private Fabrica fabrica;
 	
-	public Pintar(Fabrica fabrica) {
+	public Impresora(Fabrica fabrica) {
 		this.fabrica = fabrica;
 	}
 	
