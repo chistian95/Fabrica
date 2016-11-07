@@ -35,8 +35,8 @@ public class StockMadera extends Thread {
 	public void run() {
 		try {
 			while(true) {
-				Thread.sleep((long) (Math.random()*2000 + 500)); 
-				int rnd = (int) (Math.random()*10 + 3);
+				Thread.sleep((long) (Math.random()*5000 + 3000)); 
+				int rnd = (int) (Math.random()*50 + 25);
 				meterMadera(rnd);
 			}
 		} catch(InterruptedException e) {

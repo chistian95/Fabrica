@@ -1,6 +1,10 @@
 package dam32.christian;
 
-public class Horno {
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+public class Horno implements Pintable {
 	public static final int TOPE = 100;
 	
 	private Fabrica fabrica;
@@ -42,5 +46,23 @@ public class Horno {
 			return true;
 		}	
 		return false;
+	}
+	
+	@Override
+	public void pintar(Graphics2D g) {
+		g.setColor(Color.GRAY.darker());
+		g.fillRect(300, 175, 100, 125);
+		
+		if(fundido) {
+			g.setColor(Color.ORANGE);
+		} else {
+			g.setColor(Color.GRAY.brighter());
+		}
+		int y = 300 - cantidad;
+		g.fillRect(300, y, 100, cantidad);
+		
+		g.setColor(Color.GRAY);
+		g.setStroke(new BasicStroke(5));
+		g.drawRect(300, 175, 100, 125);
 	}
 }

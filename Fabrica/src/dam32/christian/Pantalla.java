@@ -20,9 +20,11 @@ public class Pantalla extends JFrame implements KeyListener {
 	public final int WIDTH = 700;
 	public final int HEIGHT = 500;
 	
+	private Fabrica fabrica;
 	private BufferedImage bf;
 	
 	public Pantalla(Fabrica fabrica) {
+		this.fabrica = fabrica;
 		bf = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		
 		setUndecorated(true);
@@ -47,6 +49,12 @@ public class Pantalla extends JFrame implements KeyListener {
 		
 		bff.setColor(Color.WHITE);
 		bff.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		fabrica.pintar(bff);
+		fabrica.getStockPiedra().pintar(bff);
+		fabrica.getCrusher().pintar(bff);
+		fabrica.getHorno().pintar(bff);
+		fabrica.getBasura().pintar(bff);
 		
 		g.drawImage(bf, 0, 0, null);
 	}

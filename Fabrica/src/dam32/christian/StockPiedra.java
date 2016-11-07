@@ -1,6 +1,10 @@
 package dam32.christian;
 
-public class StockPiedra extends Thread {
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+public class StockPiedra extends Thread implements Pintable {
 	public static final int TOPE = 100;
 	
 	private Fabrica fabrica;
@@ -33,12 +37,26 @@ public class StockPiedra extends Thread {
 	public void run() {
 		try {
 			while(true) {
-				int rnd = (int) (Math.random()*10 + 3);
+				int rnd = (int) (Math.random()*50 + 25);
 				meterPiedras(rnd);
-				Thread.sleep((long) (Math.random()*2000 + 500)); 
+				Thread.sleep((long) (Math.random()*5000 + 3000)); 
 			}
 		} catch(InterruptedException e) {
 			
 		}		
+	}
+	
+	@Override
+	public void pintar(Graphics2D g) {
+		g.setColor(Color.GRAY.darker());
+		g.fillRect(30, 50, 75, 100);
+		
+		int y = 150 - cantidad;
+		g.setColor(Color.GRAY.brighter());
+		g.fillRect(30, y, 75, cantidad);
+		
+		g.setColor(Color.GRAY);
+		g.setStroke(new BasicStroke(5));
+		g.drawRect(30, 50, 75, 100);
 	}
 }

@@ -1,6 +1,8 @@
 package dam32.christian;
 
-public class Basura {
+import java.awt.Graphics2D;
+
+public class Basura implements Pintable {
 	public static final int TOPE = 100;
 	
 	private int cantidad;
@@ -17,5 +19,10 @@ public class Basura {
 		} else {
 			System.out.println("(Basura) Meter basura! Stock: "+cantidad);
 		}
+	}
+	
+	@Override
+	public void pintar(Graphics2D g) {
+		
 	}
 }
