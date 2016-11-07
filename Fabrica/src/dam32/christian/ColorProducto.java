@@ -18,6 +18,11 @@ public enum ColorProducto {
 		this.color = color;
 	}
 	
+	public ColorProducto next() {
+		int val = this.valor + 1 >= ColorProducto.values().length ? 0 : this.valor + 1;
+		return ColorProducto.values()[val];
+	}
+	
 	public int getValor() {
 		return valor;
 	}

@@ -28,6 +28,11 @@ public enum TipoProducto {
 		}
 	}
 	
+	public TipoProducto next() {
+		int val = this.valor + 1 >= TipoProducto.values().length ? 0 : this.valor + 1;
+		return TipoProducto.values()[val];
+	}
+	
 	@Override
 	public String toString() {
 		return "(TipoProducto) "+nombre;
