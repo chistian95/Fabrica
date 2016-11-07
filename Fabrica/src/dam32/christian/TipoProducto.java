@@ -44,4 +44,13 @@ public enum TipoProducto {
 	public BufferedImage getTextura() {
 		return textura;
 	}
+	
+	public static TipoProducto getTipo(int valor) {
+		for(int i=0; i<TipoProducto.values().length; i++) {
+			if(TipoProducto.values()[i].getValor() == valor) {
+				return TipoProducto.values()[i];
+			}
+		}
+		return null;
+	}
 }

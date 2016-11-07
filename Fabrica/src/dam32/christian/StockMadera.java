@@ -40,7 +40,7 @@ public class StockMadera extends Thread implements Pintable {
 		try {
 			while(true) {
 				Thread.sleep((long) (Math.random()*5000 + 3000)); 
-				int rnd = (int) (Math.random()*50 + 25);
+				int rnd = (int) (Math.random()*10 + 5);
 				meterMadera(rnd);
 			}
 		} catch(InterruptedException e) {

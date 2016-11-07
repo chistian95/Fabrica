@@ -5,12 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Impresora implements Pintable {
-	private Fabrica fabrica;
 	private ColorProducto color;
-	
-	public Impresora(Fabrica fabrica) {
-		this.fabrica = fabrica;
-	}
 	
 	public void pintarProducto(Producto producto, ColorProducto color) {
 		this.color = color;

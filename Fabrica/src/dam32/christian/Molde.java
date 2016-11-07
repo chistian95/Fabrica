@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Molde extends Thread implements Pintable {
+public class Molde implements Pintable {
 	private Fabrica fabrica;	
 	private boolean mineral;
 	private boolean madera;
@@ -14,15 +14,15 @@ public class Molde extends Thread implements Pintable {
 		this.fabrica = fabrica;
 		mineral = false;
 		madera = false;
-		start();
 	}
 	
 	public boolean aceptaMadera() {
 		return !madera;
 	}
 	
-	public synchronized void crearProducto(TipoProducto tipoProducto, ColorProducto color) {
+	public synchronized Producto crearProducto(TipoProducto tipoProducto) {
 		this.tipoProducto = tipoProducto;
+		Producto prod = null;
 		try {
 			System.out.println("(Molde) Comenzando a crear producto...");
 			while(!mineral) {
@@ -41,29 +41,12 @@ public class Molde extends Thread implements Pintable {
 			}
 			mineral = false;
 			madera = false;
-			Producto producto = new Producto(tipoProducto, null);
+			prod = new Producto(tipoProducto, null);
 			System.out.println("(Molde) Producto creado!");
-			fabrica.getImpresora().pintarProducto(producto, color);
 		} catch(InterruptedException e) {
 			System.out.println("(Molde) Error en el molde: "+e.getMessage());
-		}		
-	}
-	
-	@Override
-	public void run() {
-		try {
-			while(true) {
-				int rnd = (int) (Math.random()*TipoProducto.values().length);
-				TipoProducto tipo = TipoProducto.values()[rnd];
-				rnd = (int) (Math.random()*ColorProducto.values().length);
-				ColorProducto color = ColorProducto.values()[rnd];
-				
-				crearProducto(tipo, color);
-				Thread.sleep((long) Math.random()*10000 + 5000); 
-			}
-		} catch(InterruptedException e) {
-			
-		}
+		}	
+		return prod;
 	}
 	
 	@Override
@@ -71,7 +54,9 @@ public class Molde extends Thread implements Pintable {
 		g.setColor(Color.GRAY);
 		g.fillRect(325, 325, 50, 50);
 		
-		g.drawImage(tipoProducto.getTextura(), 330, 330, 40, 40, null);
+		if(tipoProducto != null) {
+			g.drawImage(tipoProducto.getTextura(), 330, 330, 40, 40, null);
+		}
 		
 		g.setColor(Color.GRAY.darker());
 		g.setStroke(new BasicStroke(5));

@@ -1,5 +1,8 @@
 package dam32.christian;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,28 +19,36 @@ public class Fabrica extends Thread implements Pintable {
 	private Molde molde;
 	private Impresora pintar;
 	private BufferedImage fondo;
+	private Server server;
 	private Pantalla pantalla;
 	
-	public Fabrica() {
+	public Fabrica() {		
 		stockPiedra = new StockPiedra(this);
 		stockMadera = new StockMadera(this);
 		crusher = new Crusher(this);
 		basura = new Basura();
 		horno = new Horno(this);
 		molde = new Molde(this);
-		pintar = new Impresora(this);
+		pintar = new Impresora();
 		start();
 		
 		try {
 			fondo = ImageIO.read(new File("src/res/fabrica.png"));
 		} catch (IOException e) {
 			System.out.println("(Fabrica) Error al cargar fondo: "+e.getMessage());
-		}
+		}		
+		server = new Server(this);
 		pantalla = new Pantalla(this);
 	}
 	
 	public static void main(String[] args) {
 		new Fabrica();
+	}
+	
+	public synchronized Producto crearProducto(Producto producto) {
+		Producto prod = molde.crearProducto(producto.getTipo());		
+		pintar.pintarProducto(prod, producto.getColor());
+		return prod;
 	}
 	
 	@Override
@@ -57,6 +68,14 @@ public class Fabrica extends Thread implements Pintable {
 	@Override
 	public void pintar(Graphics2D g) {
 		g.drawImage(fondo, 0, 0, pantalla.WIDTH, pantalla.HEIGHT, null);
+		
+		Font fuente = new Font("Times new roman", Font.BOLD, 18);
+		FontMetrics metrics = g.getFontMetrics(fuente);
+		String texto = "Clientes: "+server.getNumClientes();
+		
+		g.setFont(fuente);
+		g.setColor(Color.WHITE);
+		g.drawString(texto, 10, metrics.getAscent());
 	}
 	
 	public StockPiedra getStockPiedra() {

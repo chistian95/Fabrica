@@ -37,9 +37,9 @@ public class StockPiedra extends Thread implements Pintable {
 	public void run() {
 		try {
 			while(true) {
-				Thread.sleep((long) (Math.random()*5000 + 3000)); 
-				int rnd = (int) (Math.random()*50 + 25);
+				int rnd = (int) (Math.random()*10 + 5);
 				meterPiedras(rnd);
+				Thread.sleep((long) (Math.random()*5000 + 3000)); 
 			}
 		} catch(InterruptedException e) {
 			
