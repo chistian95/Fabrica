@@ -1,9 +1,14 @@
 package dam32.christian;
 
-public class Molde extends Thread {
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+public class Molde extends Thread implements Pintable {
 	private Fabrica fabrica;	
 	private boolean mineral;
 	private boolean madera;
+	private TipoProducto tipoProducto;
 	
 	public Molde(Fabrica fabrica) {
 		this.fabrica = fabrica;
@@ -17,6 +22,7 @@ public class Molde extends Thread {
 	}
 	
 	public synchronized void crearProducto(TipoProducto tipoProducto, ColorProducto color) {
+		this.tipoProducto = tipoProducto;
 		try {
 			System.out.println("(Molde) Comenzando a crear producto...");
 			while(!mineral) {
@@ -37,7 +43,7 @@ public class Molde extends Thread {
 			madera = false;
 			Producto producto = new Producto(tipoProducto, null);
 			System.out.println("(Molde) Producto creado!");
-			fabrica.getPintar().pintarProducto(producto, color);
+			fabrica.getImpresora().pintarProducto(producto, color);
 		} catch(InterruptedException e) {
 			System.out.println("(Molde) Error en el molde: "+e.getMessage());
 		}		
@@ -58,5 +64,17 @@ public class Molde extends Thread {
 		} catch(InterruptedException e) {
 			
 		}
+	}
+	
+	@Override
+	public void pintar(Graphics2D g) {
+		g.setColor(Color.GRAY);
+		g.fillRect(325, 325, 50, 50);
+		
+		g.drawImage(tipoProducto.getTextura(), 330, 330, 40, 40, null);
+		
+		g.setColor(Color.GRAY.darker());
+		g.setStroke(new BasicStroke(5));
+		g.drawRect(325, 325, 50, 50);
 	}
 }

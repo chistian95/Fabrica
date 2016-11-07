@@ -83,7 +83,7 @@ public class Fabrica extends Thread implements Pintable {
 		return molde;
 	}
 	
-	public Impresora getPintar() {
+	public Impresora getImpresora() {
 		return pintar;
 	}
 }

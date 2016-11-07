@@ -1,9 +1,11 @@
 package dam32.christian;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Basura implements Pintable {
-	public static final int TOPE = 100;
+	public static final int TOPE = 50;
 	
 	private int cantidad;
 	
@@ -23,6 +25,15 @@ public class Basura implements Pintable {
 	
 	@Override
 	public void pintar(Graphics2D g) {
+		g.setColor(Color.GRAY.darker());
+		g.fillRect(150, 325, 50, 50);
 		
+		int y = 375 - cantidad;
+		g.setColor(Color.GRAY.brighter());
+		g.fillRect(150, y, 50, cantidad);
+		
+		g.setColor(Color.GRAY);
+		g.setStroke(new BasicStroke(5));
+		g.drawRect(150, 325, 50, 50);
 	}
 }

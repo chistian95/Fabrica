@@ -55,6 +55,9 @@ public class Pantalla extends JFrame implements KeyListener {
 		fabrica.getCrusher().pintar(bff);
 		fabrica.getHorno().pintar(bff);
 		fabrica.getBasura().pintar(bff);
+		fabrica.getStockMadera().pintar(bff);
+		fabrica.getMolde().pintar(bff);
+		fabrica.getImpresora().pintar(bff);
 		
 		g.drawImage(bf, 0, 0, null);
 	}

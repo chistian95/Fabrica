@@ -1,6 +1,10 @@
 package dam32.christian;
 
-public class StockMadera extends Thread {
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+public class StockMadera extends Thread implements Pintable {
 	public static final int TOPE = 100;
 	
 	private Fabrica fabrica;
@@ -23,8 +27,8 @@ public class StockMadera extends Thread {
 	}
 	
 	public boolean sacarMadera() {
-		if(cantidad > 0) {
-			cantidad--;			
+		if(cantidad >= 10) {
+			cantidad -= 10;			
 			System.out.println("(StockMadera) Sacar madera! Stock: "+cantidad);
 			return true;
 		}
@@ -42,5 +46,19 @@ public class StockMadera extends Thread {
 		} catch(InterruptedException e) {
 			
 		}	
+	}
+	
+	@Override
+	public void pintar(Graphics2D g) {
+		g.setColor(Color.GRAY.darker());
+		g.fillRect(550, 250, 75, 100);
+		
+		int y = 350 - cantidad;
+		g.setColor(Color.ORANGE.darker().darker());
+		g.fillRect(550, y, 75, cantidad);
+		
+		g.setColor(Color.GRAY);
+		g.setStroke(new BasicStroke(5));
+		g.drawRect(550, 250, 75, 100);		
 	}
 }
