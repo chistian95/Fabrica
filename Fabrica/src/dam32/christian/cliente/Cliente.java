@@ -33,19 +33,26 @@ public class Cliente {
 		new Cliente();
 	}
 	
-	public void pedirProducto(Producto prod) {
-		try {
-			System.out.println("(Cliente) Enviando peticion de producto...");
-			oos.writeUnshared(prod);
-			Producto fin = (Producto) ois.readUnshared();
-			System.out.println("(Cliente) Producto recibido! "+fin);
-		} catch (IOException e) {
-			System.out.println("(Cliente) Error al procesar producto: "+e.getMessage());
-			estado = EstadoCliente.ERROR;
-		} catch (ClassNotFoundException e) {
-			System.out.println("(Cliente) Error al leer el producto: "+e.getMessage());
-			estado = EstadoCliente.ERROR;
-		}
+	public void pedirProducto(final Producto prod) {
+		Thread t = new Thread() {
+			public void run() {
+				try {
+					estado = EstadoCliente.ESPERANDO;
+					System.out.println("(Cliente) Enviando peticion de producto...");
+					oos.writeUnshared(prod);
+					Producto fin = (Producto) ois.readUnshared();
+					System.out.println("(Cliente) Producto recibido! "+fin);
+					estado = EstadoCliente.CONECTADO;
+				} catch (IOException e) {
+					System.out.println("(Cliente) Error al procesar producto: "+e.getMessage());
+					estado = EstadoCliente.ERROR;
+				} catch (ClassNotFoundException e) {
+					System.out.println("(Cliente) Error al leer el producto: "+e.getMessage());
+					estado = EstadoCliente.ERROR;
+				}
+			}
+		};
+		t.start();
 	}
 	
 	private void conectar() {
@@ -82,6 +89,10 @@ public class Cliente {
 	
 	public EstadoCliente getEstado() {
 		return estado;
+	}
+	
+	public void setEstado(EstadoCliente estado) {
+		this.estado = estado;
 	}
 	
 	public TipoProducto getTipo() {

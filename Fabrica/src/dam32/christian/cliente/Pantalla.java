@@ -26,12 +26,12 @@ public class Pantalla extends JFrame implements KeyListener {
 	private BufferedImage bf;
 	private Boton btTipo;
 	private Boton btColor;
+	private Boton aceptar;
 	
 	public Pantalla(Cliente cliente) {
 		this.cliente = cliente;
 		bf = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		
-		setUndecorated(true);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -47,9 +47,11 @@ public class Pantalla extends JFrame implements KeyListener {
         
 	    btTipo = new Boton(this, "tipo");
 	    btColor = new Boton(this, "color");
+	    aceptar = new Boton(this, "aceptar");
         
 	    this.add(btTipo);
 	    this.add(btColor);
+	    this.add(aceptar);
         comenzar();
 	}
 	
@@ -102,16 +104,20 @@ public class Pantalla extends JFrame implements KeyListener {
 		
 		String texto = "Elige un producto y un color";
 		int x = (WIDTH - metrics.stringWidth(texto))/2;
-		int y = metrics.getAscent();
+		int y = metrics.getAscent()+50;
 		g.setFont(fuente);
 		g.setColor(Color.WHITE);
 		g.drawString(texto, x, y);
 		
-		x = WIDTH/2 - 75;
-		g.drawImage(cliente.getTipo().getTextura(), x, 100, 150, 150, null);
+		x = WIDTH/2 - 35;
+		g.drawImage(cliente.getTipo().getTextura(), x, 100, 70, 70, null);
+		
+		g.setColor(cliente.getColor().getColor());
+		g.fillOval(x, 275, 70, 70);
 		
 		btTipo.pintar(g);
 		btColor.pintar(g);
+		aceptar.pintar(g);
 	}
 	
 	public void comenzar() {
@@ -138,5 +144,9 @@ public class Pantalla extends JFrame implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+	}
+	
+	public Cliente getCliente() {
+		return cliente;
 	}
 }

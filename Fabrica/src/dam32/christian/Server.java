@@ -30,7 +30,7 @@ public class Server extends Thread {
 	}
 	
 	@Override
-	public void start() {
+	public void run() {
 		try {
 			server = new ServerSocket(5000);
 			while(true) {

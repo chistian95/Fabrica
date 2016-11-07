@@ -47,5 +47,6 @@ public class ManagerCliente extends Thread {
 				System.out.println("(ManagerCliente) Error al cerrar los streams: "+ex.getMessage());
 			}
 		}
+		server.borrarCliente(cliente);
 	}
 }
