@@ -6,6 +6,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import dam32.christian.fabrica.Fabrica;
+
 public class Server extends Thread {
 	public static final int PUERTO = 5000;
 	

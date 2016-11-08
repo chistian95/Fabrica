@@ -1,4 +1,4 @@
-package dam32.christian;
+package dam32.christian.fabrica;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,6 +10,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import dam32.christian.Producto;
+import dam32.christian.Server;
 import dam32.christian.pantalla.Pantalla;
 import dam32.christian.pantalla.Pintable;
 
@@ -43,10 +45,6 @@ public class Fabrica extends Thread implements Pintable {
 		}		
 		
 		start();
-	}
-	
-	public static void main(String[] args) {
-		new Fabrica();
 	}
 	
 	public synchronized Producto crearProducto(Producto producto) {

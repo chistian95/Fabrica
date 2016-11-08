@@ -1,4 +1,4 @@
-package dam32.christian;
+package dam32.christian.fabrica;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import dam32.christian.EstadoGeneral;
 import dam32.christian.pantalla.Pintable;
 
 public class StockPiedra extends Thread implements Pintable {

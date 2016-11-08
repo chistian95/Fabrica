@@ -1,9 +1,11 @@
-package dam32.christian;
+package dam32.christian.fabrica;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import dam32.christian.Producto;
+import dam32.christian.TipoProducto;
 import dam32.christian.pantalla.Pintable;
 
 public class Molde implements Pintable {

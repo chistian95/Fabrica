@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import dam32.christian.Fabrica;
+import dam32.christian.fabrica.Fabrica;
 
 public class Pantalla extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 1L;	

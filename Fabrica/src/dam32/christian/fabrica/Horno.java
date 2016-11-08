@@ -1,4 +1,4 @@
-package dam32.christian;
+package dam32.christian.fabrica;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
