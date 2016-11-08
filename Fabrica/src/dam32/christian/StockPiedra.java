@@ -34,6 +34,9 @@ public class StockPiedra extends Thread implements Pintable {
 	
 	public synchronized void meterPiedras(int c) {
 		try {
+			while(!estado.equals(EstadoGeneral.FUNCIONANDO)) {
+				wait();
+			}
 			estado = EstadoGeneral.CARGANDO;
 			if(VERBOSE)
 				System.out.println("(StockPiedra) Comenzando a meter piedras...");
@@ -116,11 +119,5 @@ public class StockPiedra extends Thread implements Pintable {
 		g.setColor(Color.GRAY);
 		g.setStroke(new BasicStroke(5));
 		g.drawRect(30, 50, 75, 100);
-		
-		g.drawString(cantidad+"", 50, 50);
-	}
-	
-	public EstadoGeneral getEstado() {
-		return estado;
 	}
 }

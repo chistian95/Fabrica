@@ -24,7 +24,7 @@ public class Fabrica extends Thread implements Pintable {
 	
 	public Fabrica() {		
 		stockPiedra = new StockPiedra(this);
-		stockMadera = new StockMadera(this);
+		stockMadera = new StockMadera();
 		crusher = new Crusher(this);
 		basura = new Basura();
 		horno = new Horno(this);
