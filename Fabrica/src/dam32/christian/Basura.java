@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 public class Basura implements Pintable {
 	public static final int TOPE = 50;
 	
+	private static final boolean VERBOSE = false;
 	private int cantidad;
 	
 	public Basura() {
@@ -17,10 +18,10 @@ public class Basura implements Pintable {
 		cantidad += c;
 		if(cantidad >= TOPE) {
 			cantidad = 0;
-			if(Fabrica.VERBOSE)
+			if(VERBOSE)
 				System.out.println("(Basura) Basura llena! Vaciando...");
 		} else {
-			if(Fabrica.VERBOSE)
+			if(VERBOSE)
 				System.out.println("(Basura) Meter basura! Stock: "+cantidad);
 		}
 	}

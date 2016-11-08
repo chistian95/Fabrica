@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Molde implements Pintable {
+	private static final boolean VERBOSE = false;
 	private Fabrica fabrica;	
 	private boolean mineral;
 	private boolean madera;
@@ -24,10 +25,10 @@ public class Molde implements Pintable {
 		this.tipoProducto = tipoProducto;
 		Producto prod = null;
 		try {
-			if(Fabrica.VERBOSE)
+			if(VERBOSE)
 				System.out.println("(Molde) Comenzando a crear producto...");
 			while(!mineral) {
-				if(Fabrica.VERBOSE)
+				if(VERBOSE)
 					System.out.println("(Molde) Obteniendo mineral del horno...");
 				mineral = fabrica.getHorno().quitarCantidad(10);
 				if(!mineral) {
@@ -35,7 +36,7 @@ public class Molde implements Pintable {
 				}
 			}
 			while(!madera) {
-				if(Fabrica.VERBOSE)
+				if(VERBOSE)
 					System.out.println("(Molde) Obteniendo madera del stock...");
 				madera = fabrica.getStockMadera().sacarMadera();
 				if(!madera) {
@@ -45,7 +46,7 @@ public class Molde implements Pintable {
 			mineral = false;
 			madera = false;
 			prod = new Producto(tipoProducto, null);
-			if(Fabrica.VERBOSE)
+			if(VERBOSE)
 				System.out.println("(Molde) Producto creado!");
 		} catch(InterruptedException e) {
 			System.out.println("(Molde) Error en el molde: "+e.getMessage());

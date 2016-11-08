@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 public class Crusher extends Thread implements Pintable {
+	private static final boolean VERBOSE = false;
 	private Fabrica fabrica;
 	private boolean subir;
 	private int y;
@@ -24,7 +25,7 @@ public class Crusher extends Thread implements Pintable {
 		int mineral = (int) (Math.random()*3 + 1);	
 		int basura = (int) (Math.random()*3 + 1);
 		
-		if(Fabrica.VERBOSE)
+		if(VERBOSE)
 			System.out.println("(Crusher) Roca aplastada! Mineral: "+mineral+" Basura: "+basura);
 		
 		fabrica.getBasura().meterBasura(basura);

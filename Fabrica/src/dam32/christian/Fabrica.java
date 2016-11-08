@@ -10,9 +10,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Fabrica extends Thread implements Pintable {
-	public static final boolean VERBOSE = false;
-	
+public class Fabrica extends Thread implements Pintable {	
 	private StockPiedra stockPiedra;
 	private StockMadera stockMadera;
 	private Crusher crusher;

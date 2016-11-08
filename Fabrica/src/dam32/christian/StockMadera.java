@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 public class StockMadera extends Thread implements Pintable {
 	public static final int TOPE = 100;
 	
+	private static final boolean VERBOSE = false;
 	private Fabrica fabrica;
 	private int cantidad;
 	
@@ -20,7 +21,7 @@ public class StockMadera extends Thread implements Pintable {
 		cantidad += c;
 		cantidad = cantidad > TOPE ? TOPE : cantidad;
 		
-		if(Fabrica.VERBOSE)
+		if(VERBOSE)
 			System.out.println("(StockMadera) Meter madera! Stock: "+cantidad);
 		synchronized(fabrica.getMolde()) {
 			fabrica.getMolde().notify();
@@ -30,7 +31,7 @@ public class StockMadera extends Thread implements Pintable {
 	public boolean sacarMadera() {
 		if(cantidad >= 10) {
 			cantidad -= 10;			
-			if(Fabrica.VERBOSE)
+			if(VERBOSE)
 				System.out.println("(StockMadera) Sacar madera! Stock: "+cantidad);
 			return true;
 		}

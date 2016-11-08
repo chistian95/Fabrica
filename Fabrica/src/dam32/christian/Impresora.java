@@ -5,12 +5,13 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Impresora implements Pintable {
+	private static final boolean VERBOSE = false;
 	private ColorProducto color;
 	
 	public void pintarProducto(Producto producto, ColorProducto color) {
 		this.color = color;
 		producto.setColor(color);
-		if(Fabrica.VERBOSE)
+		if(VERBOSE)
 			System.out.println("(Pintar) Producto pintado!");
 	}
 	
