@@ -10,22 +10,25 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import dam32.christian.EstadoGeneral;
+import dam32.christian.pantalla.Entidad;
 import dam32.christian.pantalla.Pintable;
 
 public class Horno implements Pintable {
 	public static final int TOPE = 50;
 	
+	private Fabrica fabrica;
 	private BufferedImage textura;
 	private EstadoGeneral estado;
 	private int alfa;
 	private boolean fundido;
 	private int cantidad;
 	
-	public Horno() {
+	public Horno(Fabrica fabrica) {
+		this.fabrica = fabrica;
 		estado = EstadoGeneral.FUNCIONANDO;
 		alfa = 0;
 		fundido = false;
-		cantidad = 0;
+		cantidad = 45;
 		
 		try {
 			textura = ImageIO.read(new File("src/res/iron_ingot.png"));
@@ -51,22 +54,51 @@ public class Horno implements Pintable {
 			animacionFundido();			
 			estado = EstadoGeneral.FUNCIONANDO;
 			fundido = true;
-			notifyAll();		
+			notifyAll();
+			synchronized(fabrica.getMolde()) {
+				fabrica.getMolde().notify();
+			}
 		}
 	}
 	
 	public boolean quitarCantidad(int c) {
 		if(fundido) {
-			cantidad -= c;
-			
-			if(cantidad <= 0) {
-				cantidad = 0;
-				fundido = false;
+			for(int i=0; i<c; i++) {
+				try {
+					cantidad--;
+					if(cantidad <= 0) {
+						cantidad = 0;
+						fundido = false;	
+						alfa = 0;
+					}
+					Entidad bloque = new Entidad(fabrica, new Color(255, 136, 0), 340, 300, 20, 20);
+					animarBloque(bloque);
+					Thread.sleep(20);
+				} catch(InterruptedException e) {
+					
+				}				
 			}
 			
 			return true;
 		}	
 		return false;
+	}
+	
+	private void animarBloque(final Entidad bloque) {
+		Thread hilo = new Thread() {
+			public void run() {
+				try {
+					while(bloque.getY() < 350) {
+						bloque.setY(bloque.getY() + 1);
+						Thread.sleep(20);
+					}					
+				} catch(InterruptedException e) {
+					
+				}
+				bloque.finalizar();
+			}
+		};
+		hilo.start();
 	}
 	
 	private void animacionFundido() {

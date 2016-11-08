@@ -1,5 +1,6 @@
 package dam32.christian.pantalla;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,6 +14,7 @@ public class Entidad implements Pintable {
 	
 	private Fabrica fabrica;
 	private BufferedImage textura;
+	private Color color;
 	private int x;
 	private int y;
 	private int ancho;
@@ -34,13 +36,29 @@ public class Entidad implements Pintable {
 		fabrica.getPantalla().añadirBloque(this);		
 	}
 	
+	public Entidad(Fabrica fabrica, Color color, int x, int y, int ancho, int alto) {
+		this.fabrica = fabrica;
+		this.x = x;
+		this.y = y;
+		this.ancho = ancho;
+		this.alto = alto;
+		this.color = color;
+		
+		fabrica.getPantalla().añadirBloque(this);
+	}
+	
 	public void finalizar() {
 		fabrica.getPantalla().borrarBloque(this);
 	}
 
 	@Override
 	public void pintar(Graphics2D g) {
-		g.drawImage(textura, x, y, ancho, alto, null);
+		if(textura == null) {
+			g.setColor(color);
+			g.fillRect(x, y, ancho, alto);
+		} else {
+			g.drawImage(textura, x, y, ancho, alto, null);
+		}
 	}
 
 	public int getX() {

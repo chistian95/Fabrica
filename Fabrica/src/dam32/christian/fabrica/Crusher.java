@@ -96,7 +96,7 @@ public class Crusher extends Thread implements Pintable {
 				for(int i=0; i<bloques.size(); i++) {
 					Entidad bloque = bloques.get(i);
 					bloque.setX(bloque.getX() + 1);
-					if(bloque.getX() > 325) {
+					if(bloque.getX() > 350) {
 						bloque.finalizar();
 						bloques.remove(bloque);
 						fabrica.getHorno().añadirCantidad(1);

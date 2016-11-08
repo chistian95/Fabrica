@@ -10,17 +10,21 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import dam32.christian.EstadoGeneral;
+import dam32.christian.pantalla.Entidad;
 import dam32.christian.pantalla.Pintable;
 
 public class StockMadera extends Thread implements Pintable {
 	public static final int TOPE = 60;
 	
 	private static final boolean VERBOSE = false;
+	private static final int VELOCIDAD = 5;
+	private Fabrica fabrica;
 	private BufferedImage textura;
 	private EstadoGeneral estado;
 	private int cantidad;
 	
-	public StockMadera() {
+	public StockMadera(Fabrica fabrica) {
+		this.fabrica = fabrica;
 		estado = EstadoGeneral.FUNCIONANDO;
 		cantidad = 0;
 		
@@ -60,7 +64,10 @@ public class StockMadera extends Thread implements Pintable {
 				wait();
 			}
 			if(cantidad > 0) {
-				cantidad--;			
+				estado = EstadoGeneral.VACIANDO;
+				cantidad--;
+				moverMadera();		
+				estado = EstadoGeneral.FUNCIONANDO;
 				if(VERBOSE)
 					System.out.println("(StockMadera) Sacar madera! Stock: "+cantidad);
 				return true;
@@ -69,6 +76,19 @@ public class StockMadera extends Thread implements Pintable {
 			
 		}
 		return false;
+	}
+	
+	private void moverMadera() {
+		Entidad bloque = new Entidad(fabrica, "src/res/log.png", 550, 325, 15, 15);
+		try {
+			while(bloque.getX() > 360) {
+				bloque.setX(bloque.getX() - 1);
+				Thread.sleep(VELOCIDAD);
+			}
+		} catch(InterruptedException e) {
+			
+		}
+		bloque.finalizar();
 	}
 	
 	@Override
