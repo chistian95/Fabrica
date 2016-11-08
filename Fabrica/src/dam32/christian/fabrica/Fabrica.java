@@ -23,7 +23,7 @@ public class Fabrica extends Thread implements Pintable {
 	private Basura basura;
 	private Horno horno;
 	private Molde molde;
-	private Impresora pintar;
+	private Impresora impresora;
 	private BufferedImage fondo;
 	private Server server;
 	private Pantalla pantalla;
@@ -35,7 +35,7 @@ public class Fabrica extends Thread implements Pintable {
 		basura = new Basura();
 		horno = new Horno(this);
 		molde = new Molde(this);
-		pintar = new Impresora();		
+		impresora = new Impresora(this);		
 		
 		try {
 			fondo = ImageIO.read(new File("src/res/fabrica.png"));
@@ -50,8 +50,9 @@ public class Fabrica extends Thread implements Pintable {
 	}
 	
 	public synchronized Producto crearProducto(Producto producto) {
+		impresora.setColor(producto.getColor());
 		Producto prod = molde.crearProducto(producto.getTipo());		
-		pintar.pintarProducto(prod, producto.getColor());
+		impresora.pintarProducto(prod, producto.getColor());
 		return prod;
 	}
 	
@@ -112,7 +113,7 @@ public class Fabrica extends Thread implements Pintable {
 	}
 	
 	public Impresora getImpresora() {
-		return pintar;
+		return impresora;
 	}
 	
 	public Pantalla getPantalla() {

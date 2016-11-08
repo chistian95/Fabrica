@@ -6,17 +6,41 @@ import java.awt.Graphics2D;
 
 import dam32.christian.ColorProducto;
 import dam32.christian.Producto;
+import dam32.christian.pantalla.Entidad;
 import dam32.christian.pantalla.Pintable;
 
 public class Impresora implements Pintable {
 	private static final boolean VERBOSE = false;
+	private static final int VELOCIDAD = 10;
+	private Fabrica fabrica;
 	private ColorProducto color;
+	private Producto producto;
+	
+	public Impresora(Fabrica fabrica) {
+		this.fabrica = fabrica;
+	}
 	
 	public void pintarProducto(Producto producto, ColorProducto color) {
+		this.producto = producto;
 		this.color = color;
-		producto.setColor(color);
+		this.producto.setColor(color);
+		moverProducto();
 		if(VERBOSE)
 			System.out.println("(Pintar) Producto pintado!");
+	}
+	
+	private void moverProducto() {
+		String ruta = "src/res/"+producto.getTipo().getNombre()+".png";
+		Entidad bloque = new Entidad(fabrica, ruta, 460, 410, 40, 40);
+		try {
+			while(bloque.getX() < fabrica.getPantalla().WIDTH) {
+				bloque.setX(bloque.getX() + 1);
+				Thread.sleep(VELOCIDAD);
+			}
+		} catch(InterruptedException e) {
+			
+		}
+		bloque.finalizar();
 	}
 	
 	@Override
@@ -34,5 +58,9 @@ public class Impresora implements Pintable {
 		
 		g.setColor(Color.GRAY.darker());
 		g.drawRect(425, 400, 100, 75);
+	}
+	
+	public void setColor(ColorProducto color) {
+		this.color = color;
 	}
 }

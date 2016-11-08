@@ -6,10 +6,12 @@ import java.awt.Graphics2D;
 
 import dam32.christian.Producto;
 import dam32.christian.TipoProducto;
+import dam32.christian.pantalla.Entidad;
 import dam32.christian.pantalla.Pintable;
 
 public class Molde implements Pintable {
 	private static final boolean VERBOSE = false;
+	private static final int VELOCIDAD = 10;
 	private Fabrica fabrica;	
 	private boolean mineral;
 	private boolean madera;
@@ -50,12 +52,31 @@ public class Molde implements Pintable {
 			mineral = false;
 			madera = false;
 			prod = new Producto(tipoProducto, null);
+			moverProducto(prod);
 			if(VERBOSE)
 				System.out.println("(Molde) Producto creado!");
 		} catch(InterruptedException e) {
 			System.out.println("(Molde) Error en el molde: "+e.getMessage());
 		}	
 		return prod;
+	}
+	
+	private void moverProducto(Producto producto) {
+		String ruta = "src/res/"+producto.getTipo().getNombre()+".png";
+		Entidad bloque = new Entidad(fabrica, ruta, 330, 330, 40, 40);
+		try {
+			while(bloque.getY() < 410) {
+				bloque.setY(bloque.getY() + 1);
+				Thread.sleep(VELOCIDAD);
+			}
+			while(bloque.getX() < 460) {
+				bloque.setX(bloque.getX() + 1);
+				Thread.sleep(VELOCIDAD);
+			}
+		} catch(InterruptedException e) {
+			
+		}
+		bloque.finalizar();
 	}
 	
 	@Override
