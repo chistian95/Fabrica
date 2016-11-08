@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import dam32.christian.EstadoGeneral;
 import dam32.christian.Producto;
 import dam32.christian.pantalla.Pantalla;
 import dam32.christian.pantalla.Pintable;
@@ -32,17 +33,18 @@ public class Fabrica extends Thread implements Pintable {
 		stockMadera = new StockMadera();
 		crusher = new Crusher(this);
 		basura = new Basura();
-		horno = new Horno(this);
+		horno = new Horno();
 		molde = new Molde(this);
-		pintar = new Impresora();
-		server = new Server(this);
-		pantalla = new Pantalla(this);
+		pintar = new Impresora();		
 		
 		try {
 			fondo = ImageIO.read(new File("src/res/fabrica.png"));
 		} catch (IOException e) {
 			System.out.println("(Fabrica) Error al cargar fondo: "+e.getMessage());
-		}		
+		}	
+		
+		server = new Server(this);
+		pantalla = new Pantalla(this);
 		
 		start();
 	}
@@ -58,6 +60,9 @@ public class Fabrica extends Thread implements Pintable {
 		try {
 			while(true) {
 				if(!horno.isFundido()) {
+					while(!horno.getEstado().equals(EstadoGeneral.FUNCIONANDO)) {
+						wait();
+					}
 					stockPiedra.sacarPiedra();
 				}
 				Thread.sleep((long) Math.random()*1000 + 200); 
@@ -69,7 +74,9 @@ public class Fabrica extends Thread implements Pintable {
 	
 	@Override
 	public void pintar(Graphics2D g) {
-		g.drawImage(fondo, 0, 0, pantalla.WIDTH, pantalla.HEIGHT, null);
+		if(pantalla != null) {
+			g.drawImage(fondo, 0, 0, pantalla.WIDTH, pantalla.HEIGHT, null);
+		}
 		
 		Font fuente = new Font("Times new roman", Font.BOLD, 18);
 		FontMetrics metrics = g.getFontMetrics(fuente);
@@ -106,5 +113,9 @@ public class Fabrica extends Thread implements Pintable {
 	
 	public Impresora getImpresora() {
 		return pintar;
+	}
+	
+	public Pantalla getPantalla() {
+		return pantalla;
 	}
 }

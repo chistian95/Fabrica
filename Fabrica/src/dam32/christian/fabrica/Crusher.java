@@ -5,36 +5,111 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Timer;
 
+import dam32.christian.EstadoGeneral;
+import dam32.christian.pantalla.Entidad;
 import dam32.christian.pantalla.Pintable;
 
 public class Crusher extends Thread implements Pintable {
 	private static final boolean VERBOSE = false;
+	private static final int VELOCIDAD = 5;
 	private Fabrica fabrica;
+	private EstadoGeneral estado;
 	private boolean subir;
 	private int y;
 	
 	public Crusher(Fabrica fabrica) {
 		this.fabrica = fabrica;
+		estado = EstadoGeneral.FUNCIONANDO;
 		subir = false;
 		y = 0;
 		start();
 	}
 	
-	public void aplastarRoca() {
-		int mineral = (int) (Math.random()*3 + 1);	
-		int basura = (int) (Math.random()*3 + 1);
+	public synchronized void aplastarRoca() {
+		estado = EstadoGeneral.ESPERANDO;
+		final int mineral = (int) (Math.random()*3 + 1);	
+		final int basura = (int) (Math.random()*3 + 1);
 		
 		if(VERBOSE)
 			System.out.println("(Crusher) Roca aplastada! Mineral: "+mineral+" Basura: "+basura);
 		
-		fabrica.getBasura().meterBasura(basura);
-		fabrica.getHorno().añadirCantidad(mineral);
+		Thread threadBasura = new Thread() {
+			public void run() {
+				moverBasura(basura);
+			}
+		};
+		Thread threadMineral = new Thread() {
+			public void run() {
+				moverMineral(mineral);
+			}
+		};
+		threadBasura.start();
+		threadMineral.start();
+		
+		try {
+			threadBasura.join();
+			threadMineral.join();
+		} catch(InterruptedException e) {
+			
+		}		
+		estado = EstadoGeneral.FUNCIONANDO;
+		notifyAll();
 	}
 	
-	private void animar() {
+	private void moverBasura(int c) {
+		List<Entidad> bloques = new ArrayList<Entidad>();
+		for(int i=0; i<c; i++) {
+			Entidad bloque = new Entidad(fabrica, "src/res/cobblestone.png", 193, 160+i*17, 15, 15);
+			bloques.add(bloque);
+		}
+		while(bloques.size() > 0) {
+			try {
+				for(int i=0; i<bloques.size(); i++) {					
+					Entidad bloque = bloques.get(i);
+					bloque.setY(bloque.getY() + 1);
+					if(bloque.getY() > 300) {
+						bloque.finalizar();
+						bloques.remove(bloque);
+						fabrica.getBasura().meterBasura(1);
+					}	
+				}
+				Thread.sleep(VELOCIDAD);
+			} catch(InterruptedException e) {
+				
+			}
+		}
+	}
+	
+	private void moverMineral(int c) {
+		List<Entidad> bloques = new ArrayList<Entidad>();
+		for(int i=0; i<c; i++) {
+			Entidad bloque = new Entidad(fabrica, "src/res/iron_ingot.png", 180+i*17, 170, 15, 15);
+			bloques.add(bloque);
+		}
+		while(bloques.size() > 0) {
+			try {
+				for(int i=0; i<bloques.size(); i++) {
+					Entidad bloque = bloques.get(i);
+					bloque.setX(bloque.getX() + 1);
+					if(bloque.getX() > 325) {
+						bloque.finalizar();
+						bloques.remove(bloque);
+						fabrica.getHorno().añadirCantidad(1);
+					}
+				}
+				Thread.sleep(VELOCIDAD);
+			} catch(InterruptedException e) {
+				
+			}
+		}
+	}
+	
+	private void animarCrusher() {
 		if(!subir) {
 			y++;
 			if(y > 50) {
@@ -52,7 +127,7 @@ public class Crusher extends Thread implements Pintable {
 	public void run() {
 		ActionListener listener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				animar();   
+				animarCrusher();   
 			}
 		};
 		Timer timer = new Timer(5, listener);
@@ -61,7 +136,7 @@ public class Crusher extends Thread implements Pintable {
 	}
 	
 	@Override
-	public void pintar(Graphics2D g) {
+	public void pintar(Graphics2D g) {		
 		g.setColor(Color.GRAY.brighter());
 		g.fillRect(150, 100+y, 100, 30);
 		
@@ -89,5 +164,9 @@ public class Crusher extends Thread implements Pintable {
 		g.setColor(Color.BLACK);
 		g.setStroke(new BasicStroke(2));
 		g.drawRect(180, 0, 40, 75);
+	}
+	
+	public EstadoGeneral getEstado() {
+		return estado;
 	}
 }

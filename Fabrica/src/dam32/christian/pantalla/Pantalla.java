@@ -10,6 +10,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -24,9 +26,11 @@ public class Pantalla extends JFrame implements KeyListener {
 	
 	private Fabrica fabrica;
 	private BufferedImage bf;
+	private List<Entidad> bloques;
 	
 	public Pantalla(Fabrica fabrica) {
 		this.fabrica = fabrica;
+		bloques = new ArrayList<Entidad>();
 		bf = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		
 		setUndecorated(true);
@@ -53,13 +57,19 @@ public class Pantalla extends JFrame implements KeyListener {
 		bff.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		fabrica.pintar(bff);
+		
+		for(int i=0; i<bloques.size(); i++) {
+			Entidad bloque = bloques.get(i);
+			bloque.pintar(bff);
+		}
+		
 		fabrica.getStockPiedra().pintar(bff);
 		fabrica.getCrusher().pintar(bff);
 		fabrica.getHorno().pintar(bff);
 		fabrica.getBasura().pintar(bff);
 		fabrica.getStockMadera().pintar(bff);
 		fabrica.getMolde().pintar(bff);
-		fabrica.getImpresora().pintar(bff);
+		fabrica.getImpresora().pintar(bff);	
 		
 		g.drawImage(bf, 0, 0, null);
 	}
@@ -88,5 +98,17 @@ public class Pantalla extends JFrame implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+	}
+	
+	public List<Entidad> getBloques() {
+		return bloques;
+	}
+	
+	public void añadirBloque(Entidad bloque) {
+		bloques.add(bloque);
+	}
+	
+	public void borrarBloque(Entidad bloque) {
+		bloques.remove(bloque);
 	}
 }
