@@ -1,4 +1,4 @@
-package dam32.christian;
+package dam32.christian.pantalla;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,6 +13,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
+
+import dam32.christian.Fabrica;
 
 public class Pantalla extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 1L;	

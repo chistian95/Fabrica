@@ -4,6 +4,8 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import dam32.christian.pantalla.Pintable;
+
 public class Molde implements Pintable {
 	private static final boolean VERBOSE = false;
 	private Fabrica fabrica;	

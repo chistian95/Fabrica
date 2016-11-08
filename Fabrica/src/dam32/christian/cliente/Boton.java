@@ -11,8 +11,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
-import dam32.christian.Pintable;
 import dam32.christian.Producto;
+import dam32.christian.pantalla.Pintable;
 
 public class Boton extends JComponent implements Pintable, MouseListener {
 	private static final long serialVersionUID = 1L;

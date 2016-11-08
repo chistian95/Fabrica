@@ -9,6 +9,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import dam32.christian.pantalla.Pintable;
+
 public class StockPiedra extends Thread implements Pintable {
 	public static final int TOPE = 60;
 	

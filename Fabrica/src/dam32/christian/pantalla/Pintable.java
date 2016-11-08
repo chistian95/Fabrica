@@ -1,4 +1,4 @@
-package dam32.christian;
+package dam32.christian.pantalla;
 
 import java.awt.Graphics2D;
 

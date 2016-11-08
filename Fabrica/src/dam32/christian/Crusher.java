@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import dam32.christian.pantalla.Pintable;
+
 public class Crusher extends Thread implements Pintable {
 	private static final boolean VERBOSE = false;
 	private Fabrica fabrica;

@@ -4,6 +4,8 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import dam32.christian.pantalla.Pintable;
+
 public class Basura implements Pintable {
 	public static final int TOPE = 50;
 	
