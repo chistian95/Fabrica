@@ -20,7 +20,8 @@ public class StockMadera extends Thread implements Pintable {
 		cantidad += c;
 		cantidad = cantidad > TOPE ? TOPE : cantidad;
 		
-		System.out.println("(StockMadera) Meter madera! Stock: "+cantidad);
+		if(Fabrica.VERBOSE)
+			System.out.println("(StockMadera) Meter madera! Stock: "+cantidad);
 		synchronized(fabrica.getMolde()) {
 			fabrica.getMolde().notify();
 		}
@@ -29,7 +30,8 @@ public class StockMadera extends Thread implements Pintable {
 	public boolean sacarMadera() {
 		if(cantidad >= 10) {
 			cantidad -= 10;			
-			System.out.println("(StockMadera) Sacar madera! Stock: "+cantidad);
+			if(Fabrica.VERBOSE)
+				System.out.println("(StockMadera) Sacar madera! Stock: "+cantidad);
 			return true;
 		}
 		return false;

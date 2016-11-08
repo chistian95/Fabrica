@@ -30,8 +30,9 @@ public class ManagerCliente extends Thread {
 		try {
 			while(true) {
 				Producto producto = (Producto) ois.readUnshared();
-				System.out.println(producto.getColor().getNombre());
+				System.out.println("(ManagerCliente) Petición recibida! Creando producto");
 				server.getFabrica().crearProducto(producto);
+				System.out.println("(ManagerCliente) Producto creado! Devolviendo al cliente");
 				oos.writeUnshared(producto);
 			}
 		} catch(IOException e) {

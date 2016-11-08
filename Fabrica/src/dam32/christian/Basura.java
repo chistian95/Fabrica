@@ -17,9 +17,11 @@ public class Basura implements Pintable {
 		cantidad += c;
 		if(cantidad >= TOPE) {
 			cantidad = 0;
-			System.out.println("(Basura) Basura llena! Vaciando...");
+			if(Fabrica.VERBOSE)
+				System.out.println("(Basura) Basura llena! Vaciando...");
 		} else {
-			System.out.println("(Basura) Meter basura! Stock: "+cantidad);
+			if(Fabrica.VERBOSE)
+				System.out.println("(Basura) Meter basura! Stock: "+cantidad);
 		}
 	}
 	

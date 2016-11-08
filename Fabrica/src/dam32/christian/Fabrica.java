@@ -11,6 +11,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Fabrica extends Thread implements Pintable {
+	public static final boolean VERBOSE = false;
+	
 	private StockPiedra stockPiedra;
 	private StockMadera stockMadera;
 	private Crusher crusher;
@@ -30,15 +32,16 @@ public class Fabrica extends Thread implements Pintable {
 		horno = new Horno(this);
 		molde = new Molde(this);
 		pintar = new Impresora();
-		start();
+		server = new Server(this);
+		pantalla = new Pantalla(this);
 		
 		try {
 			fondo = ImageIO.read(new File("src/res/fabrica.png"));
 		} catch (IOException e) {
 			System.out.println("(Fabrica) Error al cargar fondo: "+e.getMessage());
 		}		
-		server = new Server(this);
-		pantalla = new Pantalla(this);
+		
+		start();
 	}
 	
 	public static void main(String[] args) {

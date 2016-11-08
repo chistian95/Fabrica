@@ -20,7 +20,8 @@ public class StockPiedra extends Thread implements Pintable {
 		cantidad += c;
 		cantidad = cantidad > TOPE ? TOPE : cantidad;
 		
-		System.out.println("(StockPiedra) Piedras metidas! Stock: "+cantidad);
+		if(Fabrica.VERBOSE)
+			System.out.println("(StockPiedra) Piedras metidas! Stock: "+cantidad);
 	}
 	
 	public void sacarPiedra() {
@@ -29,7 +30,8 @@ public class StockPiedra extends Thread implements Pintable {
 		}
 		cantidad--;
 		
-		System.out.println("(StockPiedra) Piedra sacada! Stock: "+cantidad);
+		if(Fabrica.VERBOSE)
+			System.out.println("(StockPiedra) Piedra sacada! Stock: "+cantidad);
 		fabrica.getCrusher().aplastarRoca();
 	}
 	
@@ -37,7 +39,7 @@ public class StockPiedra extends Thread implements Pintable {
 	public void run() {
 		try {
 			while(true) {
-				int rnd = (int) (Math.random()*10 + 5);
+				int rnd = (int) (Math.random()*10 + 10);
 				meterPiedras(rnd);
 				Thread.sleep((long) (Math.random()*5000 + 3000)); 
 			}

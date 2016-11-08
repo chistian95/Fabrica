@@ -10,7 +10,8 @@ public class Impresora implements Pintable {
 	public void pintarProducto(Producto producto, ColorProducto color) {
 		this.color = color;
 		producto.setColor(color);
-		System.out.println("(Pintar) Producto pintado!");
+		if(Fabrica.VERBOSE)
+			System.out.println("(Pintar) Producto pintado!");
 	}
 	
 	@Override

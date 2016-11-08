@@ -24,7 +24,8 @@ public class Crusher extends Thread implements Pintable {
 		int mineral = (int) (Math.random()*3 + 1);	
 		int basura = (int) (Math.random()*3 + 1);
 		
-		System.out.println("(Crusher) Roca aplastada! Mineral: "+mineral+" Basura: "+basura);
+		if(Fabrica.VERBOSE)
+			System.out.println("(Crusher) Roca aplastada! Mineral: "+mineral+" Basura: "+basura);
 		
 		fabrica.getBasura().meterBasura(basura);
 		fabrica.getHorno().añadirCantidad(mineral);
