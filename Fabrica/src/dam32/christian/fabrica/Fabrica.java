@@ -11,9 +11,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import dam32.christian.Producto;
-import dam32.christian.Server;
 import dam32.christian.pantalla.Pantalla;
 import dam32.christian.pantalla.Pintable;
+import dam32.christian.servidor.Server;
 
 public class Fabrica extends Thread implements Pintable {	
 	private StockPiedra stockPiedra;

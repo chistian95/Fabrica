@@ -1,9 +1,11 @@
-package dam32.christian;
+package dam32.christian.servidor;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import dam32.christian.Producto;
 
 public class ManagerCliente extends Thread {
 	private ObjectInputStream ois;

@@ -1,4 +1,4 @@
-package dam32.christian;
+package dam32.christian.servidor;
 
 import java.io.IOException;
 import java.net.ServerSocket;
