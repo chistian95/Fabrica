@@ -6,14 +6,16 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.swing.JOptionPane;
+
 import dam32.christian.ColorProducto;
 import dam32.christian.Producto;
 import dam32.christian.TipoProducto;
 
 public class Cliente {
-	public static final String IP = "localhost";
 	public static final int PUERTO = 5000;
 	
+	private String ip;
 	private Socket cliente;
 	private EstadoCliente estado;
 	private TipoProducto tipo;
@@ -21,7 +23,8 @@ public class Cliente {
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
 	
-	public Cliente() {
+	public Cliente(String ip) {
+		this.ip = ip;
 		estado = EstadoCliente.CONECTANDO;
 		tipo = TipoProducto.ESPADA;
 		color = ColorProducto.ROJO;
@@ -30,7 +33,11 @@ public class Cliente {
 	}
 	
 	public static void main(String[] args) {
-		new Cliente();
+		String ip = JOptionPane.showInputDialog(null, "Introduce la IP");
+		if(ip == null) {
+			ip = "localhost";
+		}
+		new Cliente(ip);
 	}
 	
 	public void pedirProducto(final Producto prod) {
@@ -58,7 +65,7 @@ public class Cliente {
 	private void conectar() {
 		try {
 			System.out.println("(Cliente) Conectando al servidor...");
-			cliente = new Socket(IP, PUERTO);
+			cliente = new Socket(ip, PUERTO);
 			System.out.println("(Cliente) Abriendo streams...");
 			oos = new ObjectOutputStream(cliente.getOutputStream());
 			ois = new ObjectInputStream(cliente.getInputStream());

@@ -130,7 +130,5 @@ public class StockMadera extends Thread implements Pintable {
 		g.setColor(Color.GRAY);
 		g.setStroke(new BasicStroke(5));
 		g.drawRect(550, 250, 75, 100);	
-		
-		g.drawString(cantidad+"", 550, 50);
 	}
 }
