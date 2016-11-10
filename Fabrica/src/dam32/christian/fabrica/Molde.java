@@ -8,6 +8,7 @@ import dam32.christian.Producto;
 import dam32.christian.TipoProducto;
 import dam32.christian.pantalla.Entidad;
 import dam32.christian.pantalla.Pintable;
+import dam32.christian.servidor.ManagerCliente;
 
 public class Molde implements Pintable {
 	private static final boolean VERBOSE = false;
@@ -27,12 +28,14 @@ public class Molde implements Pintable {
 		return !madera;
 	}
 	
-	public synchronized Producto crearProducto(TipoProducto tipoProducto) {
+	public synchronized Producto crearProducto(TipoProducto tipoProducto, ManagerCliente cliente) {
 		this.tipoProducto = tipoProducto;
 		Producto prod = null;
+		cliente.setEstadoProducto("Procesando...");
 		try {
 			if(VERBOSE)
 				System.out.println("(Molde) Comenzando a crear producto...");
+			cliente.setEstadoProducto("Obteniendo mineral...");
 			while(!mineral) {
 				if(VERBOSE)
 					System.out.println("(Molde) Obteniendo mineral del horno...");
@@ -41,6 +44,7 @@ public class Molde implements Pintable {
 					wait();
 				}
 			}
+			cliente.setEstadoProducto("Obteniendo madera...");
 			while(!madera) {
 				if(VERBOSE)
 					System.out.println("(Molde) Obteniendo madera del stock...");
@@ -52,6 +56,7 @@ public class Molde implements Pintable {
 			mineral = false;
 			madera = false;
 			prod = new Producto(tipoProducto, null);
+			cliente.setEstadoProducto("Fabricando producto...");
 			moverProducto(prod);
 			if(VERBOSE)
 				System.out.println("(Molde) Producto creado!");

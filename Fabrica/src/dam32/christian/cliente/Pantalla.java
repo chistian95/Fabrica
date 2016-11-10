@@ -90,12 +90,20 @@ public class Pantalla extends JFrame implements KeyListener {
 		Font fuente = new Font("Times new roman", Font.BOLD, 20);
 		FontMetrics metrics = g.getFontMetrics(fuente);
 		
-		String texto = cliente.getEstado().getNombre();
+		String texto = cliente.getEstado().getNombre();;
+		if(cliente.getEstado().equals(EstadoCliente.ESPERANDO)) {
+			texto = cliente.getTexto();
+		}
 		int x = (WIDTH - metrics.stringWidth(texto))/2;
 		int y = ((HEIGHT - metrics.getHeight())/2) + metrics.getAscent();
 		g.setFont(fuente);
 		g.setColor(Color.BLACK);
 		g.drawString(texto, x, y);
+		if(cliente.getEstado().equals(EstadoCliente.ERROR)) {
+			x = (WIDTH - metrics.stringWidth(cliente.getTextoError()))/2;
+			y = ((HEIGHT - metrics.getHeight())/2) + 2*metrics.getAscent() + 10;
+			g.drawString(cliente.getTextoError(), x, y);
+		}
 	}
 	
 	private void pintarInterfaz(Graphics2D g) {

@@ -14,6 +14,7 @@ import dam32.christian.EstadoGeneral;
 import dam32.christian.Producto;
 import dam32.christian.pantalla.Pantalla;
 import dam32.christian.pantalla.Pintable;
+import dam32.christian.servidor.ManagerCliente;
 import dam32.christian.servidor.Server;
 
 public class Fabrica extends Thread implements Pintable {	
@@ -49,9 +50,10 @@ public class Fabrica extends Thread implements Pintable {
 		start();
 	}
 	
-	public synchronized Producto crearProducto(Producto producto) {
+	public synchronized Producto crearProducto(Producto producto, ManagerCliente cliente) {
 		impresora.setColor(producto.getColor());
-		Producto prod = molde.crearProducto(producto.getTipo());		
+		Producto prod = molde.crearProducto(producto.getTipo(), cliente);	
+		cliente.setEstadoProducto("Pintando producto...");
 		impresora.pintarProducto(prod, producto.getColor());
 		return prod;
 	}
